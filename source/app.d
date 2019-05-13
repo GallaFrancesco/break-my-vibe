@@ -3,22 +3,29 @@ import vibe.stream.tls;
 import vibe.http.internal.http2.http2 : http2Callback; // ALPN negotiation
 import vibe.core.core : runApplication;
 
+void handleTestImage(scope HTTPServerRequest req, scope HTTPServerResponse res)
+@safe {
+}
+
 void handleRequest(scope HTTPServerRequest req, scope HTTPServerResponse res)
 @safe {
-	bool isHTTP2 = false;
-	if(req.httpVersion == HTTPVersion.HTTP_2) isHTTP2 = true;
+	if (req.path == "/") {
+		bool isHTTP2 = req.httpVersion == HTTPVersion.HTTP_2;
+		res.headers["Content-Type"] = "text/html";
+		res.render!("index.dt", req, isHTTP2);
 
-	res.headers["Content-Type"] = "text/html";
-
-	res.render!("diet.dt", req, isHTTP2);
+	} else if(req.path == "/image") {
+		handleTestImage(req, res);
+	}
 }
 
 void main()
 {
+	import vibe.core.log;
+	setLogLevel(LogLevel.trace);
 /* ========== HTTPS (h2) support ========== */
 	HTTPServerSettings tlsSettings;
 	tlsSettings.port = 8091;
-	tlsSettings.bindAddresses = ["127.0.0.1"];
 
 	/// setup TLS context by using cert and key in example rootdir
 	tlsSettings.tlsContext = createTLSContext(TLSContextKind.server);
