@@ -1,0 +1,30 @@
+doctype html
+html(lang="en")
+	head
+		title= "Vibe.d HTTP/2 demo"
+	body
+		h1#caption Break my Vibe!
+		p(style='color: black;', class="Description") This is a demo page of the current HTTP/2 functionality in <a href="https://vibed.org">Vibe.d</a>.
+
+		p(style='color: red;', class="Warning") <b>The new HTTP/2 module is experimental!</b>
+
+		p(style='color: black', class="Description")
+		| If you're an interested D user, want HTTP/2 to be improved and wish to contribute
+		| please go on and <b>try to take this webpage down</b>.
+		- if(isHTTP2)
+			p <b>You are currently using HTTP/2.</b>
+		- else
+			p <b>You are using HTTP/1. Please use a web client with HTTP/2 support.</b>
+		a(href="https://github.com/vibe-d/vibe-http") Here's the <b>vibe-http</b> module code.
+		p
+		a(href="https://github.com/gallafrancesco/break-my-vibe") Here's the <b>webserver</b> code.
+		p
+
+		h2#caption Tests
+		<ul>
+			<li>GET <a href="/request">/requests</a> to dump a received request.
+			<li>GET <a href="/annoying">/annoying</a> to receive annoying messages every second.
+			<li>GET <a href="/image">/image</a> to load an image and check out some stats.
+		</ul>
+
+

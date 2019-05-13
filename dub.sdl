@@ -1,0 +1,8 @@
+name "h2demo"
+description "Break my Vibe.d"
+authors "fra"
+copyright "Copyright © 2019, fra"
+license "GPLv3"
+
+dependency "vibe-http" path="../vibe-http"
+versions "VibeForceALPN"
