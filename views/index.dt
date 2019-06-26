@@ -22,7 +22,7 @@ html(lang="en")
 
 		h2#caption Tests
 		<ul>
-			<li>GET <a href="/request">/requests</a> to dump a received request.
+			<li>GET <a href="/request">/request</a> to dump a received request.
 			<li>GET <a href="/annoying">/annoying</a> to receive annoying messages every second.
 			<li>GET <a href="/image">/image</a> to load an image and check out some stats.
 		</ul>

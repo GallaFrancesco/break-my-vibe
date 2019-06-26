@@ -14,6 +14,15 @@ void handleRequest(scope HTTPServerRequest req, scope HTTPServerResponse res)
 		res.headers["Content-Type"] = "text/html";
 		res.render!("index.dt", req, isHTTP2);
 
+	} else if(req.path == "/request") {
+		string reply = "BEGIN dump of received request:\n---\n";
+		reply ~= httpMethodString(req.method) ~ " " ~ req.path ~ " " ~ getHTTPVersionString(req.httpVersion);
+		foreach(hkey, hvalue; req.headers.byKeyValue) {
+			reply ~= "\n" ~ hkey ~ ": " ~ hvalue;
+		}
+		reply ~= "\n---\nEND of dump";
+		res.writeBody(reply);
+
 	} else if(req.path == "/image") {
 		handleTestImage(req, res);
 	}
@@ -25,7 +34,8 @@ void main()
 	setLogLevel(LogLevel.trace);
 /* ========== HTTPS (h2) support ========== */
 	HTTPServerSettings tlsSettings;
-	tlsSettings.port = 8091;
+	tlsSettings.bindAddresses = ["0.0.0.0"];
+	tlsSettings.port = 46785;
 
 	/// setup TLS context by using cert and key in example rootdir
 	tlsSettings.tlsContext = createTLSContext(TLSContextKind.server);
